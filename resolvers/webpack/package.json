@@ -32,7 +32,7 @@
   "homepage": "https://github.com/import-js/eslint-plugin-import/tree/HEAD/resolvers/webpack",
   "dependencies": {
     "debug": "^3.2.7",
-    "enhanced-resolve": "^0.9.1",
+    "enhanced-resolve": "^5.18.1",
     "find-root": "^1.1.0",
     "hasown": "^2.0.2",
     "interpret": "^1.4.0",
