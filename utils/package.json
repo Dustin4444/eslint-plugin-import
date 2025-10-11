@@ -67,7 +67,7 @@
     "@ljharb/tsconfig": "^0.2.0",
     "@types/debug": "^4.1.12",
     "@types/eslint": "^8.56.3",
-    "@types/node": "^20.11.20",
+    "@types/node": "^24.5.2",
     "typescript": "next"
   },
   "peerDependenciesMeta": {
