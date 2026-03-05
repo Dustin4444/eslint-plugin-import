@@ -14,6 +14,10 @@ function opts(file, config, packageFilter) {
     extensions: ['.mjs', '.js', '.json', '.node'],
     // TODO: semver-major: remove this to match Node's default behavior
     preserveSymlinks: true,
+    // Use the consumer's engines.node to determine exports resolution behavior.
+    // Falls back to traditional resolution when engines.node is absent.
+    // Set engines: false in resolver config to opt out.
+    engines: true,
   }, config, {
     // path.resolve will handle paths relative to CWD
     basedir: path.dirname(path.resolve(file)),
