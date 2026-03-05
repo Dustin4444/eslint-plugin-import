@@ -64,16 +64,16 @@ module.exports = {
 
     const options = context.options[0] || {};
     const maxDepth = typeof options.maxDepth === 'number' ? options.maxDepth : Infinity;
-    const ignoreModule = (name) => options.ignoreExternal && isExternalModule(
+    const ignoreModule = (name, moduleSystem) => options.ignoreExternal && isExternalModule(
       name,
-      resolve(name, context),
+      resolve(name, context, moduleSystem),
       context,
     );
 
     const scc = options.disableScc ? {} : StronglyConnectedComponentsBuilder.get(myPath, context);
 
-    function checkSourceValue(sourceNode, importer) {
-      if (ignoreModule(sourceNode.value)) {
+    function checkSourceValue(sourceNode, importer, moduleSystem) {
+      if (ignoreModule(sourceNode.value, moduleSystem)) {
         return; // ignore external modules
       }
       if (

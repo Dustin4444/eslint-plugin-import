@@ -177,7 +177,7 @@ function checkDependencyDeclaration(deps, packageName, declarationStatus) {
   }), newDeclarationStatus);
 }
 
-function reportIfMissing(context, deps, depsOptions, node, name) {
+function reportIfMissing(context, deps, depsOptions, node, name, moduleSystem) {
   // Do not report when importing types unless option is enabled
   if (
     !depsOptions.verifyTypeImports
@@ -200,7 +200,7 @@ function reportIfMissing(context, deps, depsOptions, node, name) {
     return;
   }
 
-  const resolved = resolve(name, context);
+  const resolved = resolve(name, context, moduleSystem);
   if (!resolved) { return; }
 
   const importPackageName = getModuleOriginalName(name);
@@ -297,8 +297,8 @@ module.exports = {
       verifyTypeImports: !!options.includeTypes,
     };
 
-    return moduleVisitor((source, node) => {
-      reportIfMissing(context, deps, depsOptions, node, source.value);
+    return moduleVisitor((source, node, moduleSystem) => {
+      reportIfMissing(context, deps, depsOptions, node, source.value, moduleSystem);
     }, { commonjs: true });
   },
 

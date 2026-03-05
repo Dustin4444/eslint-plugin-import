@@ -462,6 +462,24 @@ with `wontfix`.
 
 See [resolvers](#resolvers).
 
+#### Node resolver: `exports` field support
+
+The built-in Node resolver supports package.json [`exports`](https://nodejs.org/api/packages.html#exports) field resolution. When your project's `package.json` specifies an `engines.node` range that includes Node 12+, the resolver will automatically use exports-aware resolution. This means imports of package subpaths not listed in `exports` will be correctly reported as unresolvable.
+
+The plugin also passes the module system context (`'import'` for ES module `import`/`export`/`import()`, `'require'` for CommonJS `require()`) to the resolver, so that the appropriate [conditional exports](https://nodejs.org/api/packages.html#conditional-exports) are selected.
+
+To opt out of exports-aware resolution, set `engines: false` in the resolver config:
+
+```js
+"settings": {
+  "import/resolver": {
+    "node": {
+      "engines": false
+    }
+  }
+}
+```
+
 ### `import/cache`
 
 Settings for cache behavior. Memoization is used at various levels to avoid the copious amount of `fs.statSync`/module parse calls required to correctly report errors.

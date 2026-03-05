@@ -20,13 +20,13 @@ function findNamedPackage(filePath) {
   return found;
 }
 
-function checkImportForRelativePackage(context, importPath, node) {
+function checkImportForRelativePackage(context, importPath, node, moduleSystem) {
   const potentialViolationTypes = ['parent', 'index', 'sibling'];
   if (potentialViolationTypes.indexOf(importType(importPath, context)) === -1) {
     return;
   }
 
-  const resolvedImport = resolve(importPath, context);
+  const resolvedImport = resolve(importPath, context, moduleSystem);
   const resolvedContext = getPhysicalFilename(context);
 
   if (!resolvedImport || !resolvedContext) {
@@ -67,6 +67,6 @@ module.exports = {
   },
 
   create(context) {
-    return moduleVisitor((source) => checkImportForRelativePackage(context, source.value, source), context.options[0]);
+    return moduleVisitor((source, node, moduleSystem) => checkImportForRelativePackage(context, source.value, source, moduleSystem), context.options[0]);
   },
 };

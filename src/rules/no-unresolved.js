@@ -28,7 +28,7 @@ module.exports = {
   create(context) {
     const options = context.options[0] || {};
 
-    function checkSourceValue(source, node) {
+    function checkSourceValue(source, node, moduleSystem) {
       // ignore type-only imports and exports
       if (node.importKind === 'type' || node.exportKind === 'type') {
         return;
@@ -37,7 +37,7 @@ module.exports = {
       const caseSensitive = !CASE_SENSITIVE_FS && options.caseSensitive !== false;
       const caseSensitiveStrict = !CASE_SENSITIVE_FS && options.caseSensitiveStrict;
 
-      const resolvedPath = resolve(source.value, context);
+      const resolvedPath = resolve(source.value, context, moduleSystem);
 
       if (resolvedPath === undefined) {
         context.report(

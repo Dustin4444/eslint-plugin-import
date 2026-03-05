@@ -57,6 +57,8 @@ the absolute path to the file making the import (`/some/path/to/module.js`)
 an object provided via the `import/resolver` setting. `my-cool-resolver` will get `["some", "stuff"]` as its `config`, while
   `node` will get `{ "paths": ["a", "b", "c"] }` provided as `config`.
 
+The plugin may also merge a `moduleSystem` property into the config object, with a value of `'import'` or `'require'`, indicating whether the source being resolved is an ES module `import`/`export`/`import()` or a CommonJS `require()`. Resolvers that support package.json `exports` can use this to select the appropriate conditions (e.g. `['import', 'node', 'default']` vs `['node', 'require', 'default']`). If absent, resolvers should default to `'require'` behavior for backward compatibility.
+
 ### Return value
 
 The first resolver to return `{found: true}` is considered the source of truth. The returned object has:

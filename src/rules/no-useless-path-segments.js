@@ -64,7 +64,7 @@ module.exports = {
     const currentDir = path.dirname(getPhysicalFilename(context));
     const options = context.options[0];
 
-    function checkSourceValue(source) {
+    function checkSourceValue(source, node, moduleSystem) {
       const { value: importPath } = source;
 
       function reportWithProposedPath(proposedPath) {
@@ -82,9 +82,9 @@ module.exports = {
       }
 
       // Report rule violation if path is not the shortest possible
-      const resolvedPath = resolve(importPath, context);
+      const resolvedPath = resolve(importPath, context, moduleSystem);
       const normedPath = normalize(importPath);
-      const resolvedNormedPath = resolve(normedPath, context);
+      const resolvedNormedPath = resolve(normedPath, context, moduleSystem);
       if (normedPath !== importPath && resolvedPath === resolvedNormedPath) {
         return reportWithProposedPath(normedPath);
       }
@@ -101,7 +101,7 @@ module.exports = {
         // Try to find ambiguous imports
         if (parentDirectory !== '.' && parentDirectory !== '..') {
           for (const fileExtension of fileExtensions) {
-            if (resolve(`${parentDirectory}${fileExtension}`, context)) {
+            if (resolve(`${parentDirectory}${fileExtension}`, context, moduleSystem)) {
               return reportWithProposedPath(`${parentDirectory}/`);
             }
           }

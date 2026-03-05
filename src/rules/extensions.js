@@ -151,12 +151,12 @@ module.exports = {
       return getModifier(extension) === 'never';
     }
 
-    function isResolvableWithoutExtension(file) {
+    function isResolvableWithoutExtension(file, moduleSystem) {
       const extension = path.extname(file);
       const fileWithoutExtension = file.slice(0, -extension.length);
-      const resolvedFileWithoutExtension = resolve(fileWithoutExtension, context);
+      const resolvedFileWithoutExtension = resolve(fileWithoutExtension, context, moduleSystem);
 
-      return resolvedFileWithoutExtension === resolve(file, context);
+      return resolvedFileWithoutExtension === resolve(file, context, moduleSystem);
     }
 
     function isExternalRootModule(file) {
@@ -177,7 +177,7 @@ module.exports = {
       }
     }
 
-    function checkFileExtension(source, node) {
+    function checkFileExtension(source, node, moduleSystem) {
       // bail if the declaration doesn't have a source, e.g. "export { foo };", or if it's only partially typed like in an editor
       if (!source || !source.value) { return; }
 
@@ -202,7 +202,7 @@ module.exports = {
       // Like `import Decimal from decimal.js`)
       if (!overrideAction && isExternalRootModule(importPath)) { return; }
 
-      const resolvedPath = resolve(importPath, context);
+      const resolvedPath = resolve(importPath, context, moduleSystem);
 
       // get extension from resolved path, if possible.
       // for unresolved, use source value.
@@ -211,7 +211,7 @@ module.exports = {
       // determine if this is a module
       const isPackage = isExternalModule(
         importPath,
-        resolve(importPath, context),
+        resolve(importPath, context, moduleSystem),
         context,
       ) || isScoped(importPath);
 
@@ -228,7 +228,7 @@ module.exports = {
           });
         }
       } else if (extension) {
-        if (isUseOfExtensionForbidden(extension) && isResolvableWithoutExtension(importPath)) {
+        if (isUseOfExtensionForbidden(extension) && isResolvableWithoutExtension(importPath, moduleSystem)) {
           context.report({
             node: source,
             message: `Unexpected use of file extension "${extension}" for "${importPathWithQueryString}"`,

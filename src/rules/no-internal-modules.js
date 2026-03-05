@@ -79,7 +79,7 @@ module.exports = {
       return forbidRegexps.some((re) => re.test(importPath));
     }
 
-    function isAllowViolation(importPath) {
+    function isAllowViolation(importPath, moduleSystem) {
       const steps = toSteps(importPath);
 
       const nonScopeSteps = steps.filter((step) => step.indexOf('@') !== 0);
@@ -92,7 +92,7 @@ module.exports = {
 
       // if the import statement doesn't match directly, try to match the
       // resolved path if the import is resolvable
-      const resolved = resolve(importPath, context);
+      const resolved = resolve(importPath, context, moduleSystem);
       if (!resolved || reachingAllowed(normalizeSep(resolved))) { return false; }
 
       // this import was not allowed by the allowed paths, and reaches
@@ -100,7 +100,7 @@ module.exports = {
       return true;
     }
 
-    function isForbidViolation(importPath) {
+    function isForbidViolation(importPath, moduleSystem) {
       const steps = toSteps(importPath);
 
       // before trying to resolve, see if the raw import (with relative
@@ -111,7 +111,7 @@ module.exports = {
 
       // if the import statement doesn't match directly, try to match the
       // resolved path if the import is resolvable
-      const resolved = resolve(importPath, context);
+      const resolved = resolve(importPath, context, moduleSystem);
       if (resolved && reachingForbidden(normalizeSep(resolved))) { return true; }
 
       // this import was not forbidden by the forbidden paths so it is not a violation
@@ -121,11 +121,11 @@ module.exports = {
     // find a directory that is being reached into, but which shouldn't be
     const isReachViolation = options.forbid ? isForbidViolation : isAllowViolation;
 
-    function checkImportForReaching(importPath, node) {
+    function checkImportForReaching(importPath, node, moduleSystem) {
       const potentialViolationTypes = ['parent', 'index', 'sibling', 'external', 'internal'];
       if (
         potentialViolationTypes.indexOf(importType(importPath, context)) !== -1
-        && isReachViolation(importPath)
+        && isReachViolation(importPath, moduleSystem)
       ) {
         context.report({
           node,
@@ -135,8 +135,8 @@ module.exports = {
     }
 
     return moduleVisitor(
-      (source) => {
-        checkImportForReaching(source.value, source);
+      (source, node, moduleSystem) => {
+        checkImportForReaching(source.value, source, moduleSystem);
       },
       { commonjs: true },
     );

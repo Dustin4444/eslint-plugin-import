@@ -216,8 +216,8 @@ module.exports = {
 
     const validators = [];
 
-    function checkForRestrictedImportPath(importPath, node) {
-      const absoluteImportPath = resolve(importPath, context);
+    function checkForRestrictedImportPath(importPath, node, moduleSystem) {
+      const absoluteImportPath = resolve(importPath, context, moduleSystem);
 
       if (!absoluteImportPath) {
         return;
@@ -239,8 +239,8 @@ module.exports = {
       });
     }
 
-    return moduleVisitor((source) => {
-      checkForRestrictedImportPath(source.value, source);
+    return moduleVisitor((source, node, moduleSystem) => {
+      checkForRestrictedImportPath(source.value, source, moduleSystem);
     }, { commonjs: true });
   },
 };

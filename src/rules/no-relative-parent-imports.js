@@ -21,14 +21,14 @@ module.exports = {
     const myPath = getPhysicalFilename(context);
     if (myPath === '<text>') { return {}; } // can't check a non-file
 
-    function checkSourceValue(sourceNode) {
+    function checkSourceValue(sourceNode, node, moduleSystem) {
       const depPath = sourceNode.value;
 
       if (importType(depPath, context) === 'external') { // ignore packages
         return;
       }
 
-      const absDepPath = resolve(depPath, context);
+      const absDepPath = resolve(depPath, context, moduleSystem);
 
       if (!absDepPath) { // unable to resolve path
         return;
