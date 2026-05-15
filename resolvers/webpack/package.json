@@ -34,12 +34,12 @@
     "debug": "^3.2.7",
     "enhanced-resolve": "^0.9.1",
     "find-root": "^1.1.0",
-    "hasown": "^2.0.2",
+    "hasown": "^2.0.3",
     "interpret": "^1.4.0",
-    "is-core-module": "^2.16.1",
+    "is-core-module": "^2.16.2",
     "is-regex": "^1.2.1",
     "lodash": "^4.18.1",
-    "resolve": "^2.0.0-next.6",
+    "resolve": "^2.0.0-next.7",
     "semver": "^5.7.2"
   },
   "peerDependencies": {
