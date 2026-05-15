@@ -31,8 +31,8 @@
   "homepage": "https://github.com/import-js/eslint-plugin-import",
   "dependencies": {
     "debug": "^3.2.7",
-    "is-core-module": "^2.16.1",
-    "resolve": "^2.0.0-next.6"
+    "is-core-module": "^2.16.2",
+    "resolve": "^2.0.0-next.7"
   },
   "devDependencies": {
     "chai": "^3.5.0",
