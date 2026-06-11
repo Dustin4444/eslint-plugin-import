@@ -50,7 +50,7 @@
     "babel-plugin-istanbul": "^4.1.6",
     "babel-register": "^6.26.0",
     "chai": "^3.5.0",
-    "mocha": "^3.5.3",
+    "mocha": "^10.6.0",
     "nyc": "^11.9.0",
     "webpack": "https://gist.github.com/ljharb/9cdb687f3806f8e6cb8a365d0b7840eb"
   },
