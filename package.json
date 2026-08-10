@@ -133,6 +133,6 @@
     "object.values": "^1.2.1",
     "semver": "^6.3.1",
     "string.prototype.trimend": "^1.0.9",
-    "tsconfig-paths": "^3.15.0"
+    "tsconfig-paths": "^4.2.0"
   }
 }
