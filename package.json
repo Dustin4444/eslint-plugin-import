@@ -131,7 +131,7 @@
     "object.fromentries": "^2.0.8",
     "object.groupby": "^1.0.3",
     "object.values": "^1.2.1",
-    "semver": "^6.3.1",
+    "semver": "^7.7.1",
     "string.prototype.trimend": "^1.0.9",
     "tsconfig-paths": "^3.15.0"
   }
